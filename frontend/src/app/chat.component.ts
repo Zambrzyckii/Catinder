@@ -18,7 +18,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
                 <div
                   class="max-w-xs rounded-2xl rounded-br-none border-4 border-timber bg-honey px-4 py-2 font-medium text-timber md:max-w-md"
                 >
-                  {{ msg }} 🐾
+                  {{ msg }} <span class="emoji">🐾</span>
                 </div>
               </div>
             } @else {
@@ -26,14 +26,14 @@ import { toObservable } from '@angular/core/rxjs-interop';
                 <div
                   class="max-w-xs rounded-2xl rounded-bl-none border-4 border-timber bg-blush px-4 py-2 font-medium text-timber md:max-w-md"
                 >
-                  😸 {{ msg }}
+                  <span class="emoji">😸</span> {{ msg }}
                 </div>
               </div>
             }
           } @empty {
             <div class="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-              <span class="text-5xl">💌</span>
-              <p class="font-bold text-timber">Say hi to your match! 🐟</p>
+              <span class="emoji text-5xl">💌</span>
+              <p class="font-bold text-timber">Say hi to your match! <span class="emoji">🐟</span></p>
             </div>
           }
         }
@@ -66,7 +66,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
           class="size-12 shrink-0 rounded-full border-4 border-timber bg-coral text-xl transition-transform hover:scale-110"
           title="Send"
         >
-          💌
+          <span class="emoji">💌</span>
         </button>
       </div>
     </div>

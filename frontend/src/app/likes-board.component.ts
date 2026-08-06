@@ -7,7 +7,7 @@ import { AsyncPipe } from '@angular/common';
   template: `
     <div class="p-6">
       <h1 class="mb-6 flex items-center gap-2 text-2xl font-extrabold text-timber">
-        <span class="text-3xl">💖</span> Your liked cats
+        <span class="emoji text-3xl">💖</span> Your liked cats
       </h1>
 
       <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
@@ -26,14 +26,14 @@ import { AsyncPipe } from '@angular/common';
             <div class="border-t-4 border-timber p-3">
               <p class="font-extrabold text-timber">{{ cat.name }} {{ cat.surname }}</p>
               <p class="text-sm text-timber/80">
-                {{ cat.gender === 'male' ? '🐟' : '🌸' }} {{ cat.gender }}
+                <span class="emoji">{{ cat.gender === 'male' ? '🐟' : '🌸' }}</span> {{ cat.gender }}
               </p>
               <button
                 (click)="deleteLike(cat.id)"
                 class="mt-2 rounded-full border-2 border-timber bg-rosette/60 px-3 py-1 text-sm font-bold text-timber transition-transform hover:scale-105"
                 title="Remove like"
               >
-                🗑️ Delete
+                <span class="emoji">🗑️</span> Delete
               </button>
             </div>
           </div>
@@ -41,8 +41,8 @@ import { AsyncPipe } from '@angular/common';
           <div
             class="col-span-full flex flex-col items-center gap-3 rounded-2xl border-4 border-dashed border-timber bg-blush/30 p-10 text-center"
           >
-            <span class="text-5xl">😿</span>
-            <p class="font-bold text-timber">No likes yet — go swipe some cats! 🐾</p>
+            <span class="emoji text-5xl">😿</span>
+            <p class="font-bold text-timber">No likes yet — go swipe some cats! <span class="emoji">🐾</span></p>
           </div>
         }
       </div>

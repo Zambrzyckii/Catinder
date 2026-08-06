@@ -28,13 +28,13 @@ const FLY_OFF_MS = 180;
           class="absolute top-4 left-4 z-10 -rotate-12 rounded-lg border-4 border-honey bg-cream/80 px-3 py-1 text-2xl font-extrabold text-honey"
           [style.opacity]="likeOpacity()"
         >
-          LIKE 💖
+          LIKE <span class="emoji">💖</span>
         </span>
         <span
           class="absolute top-4 right-4 z-10 rotate-12 rounded-lg border-4 border-coral bg-cream/80 px-3 py-1 text-2xl font-extrabold text-coral"
           [style.opacity]="nopeOpacity()" 
         >
-          NOPE ❌
+          NOPE <span class="emoji">❌</span>
         </span>
 
         <!-- Fixed 3:4 frame normalizes any API image aspect ratio -->
@@ -53,7 +53,7 @@ const FLY_OFF_MS = 180;
             <span
               class="shrink-0 rounded-full border-2 border-timber bg-rosette/50 px-2 py-0.5 text-xs font-bold text-timber"
             >
-              {{ cat.gender === 'male' ? '🐟' : '🌸' }} {{ cat.gender }}
+              <span class="emoji">{{ cat.gender === 'male' ? '🐟' : '🌸' }}</span> {{ cat.gender }}
             </span>
           </div>
           <p class="mt-2 line-clamp-3 text-sm text-timber/80">{{ cat.bio }}</p>
@@ -66,21 +66,21 @@ const FLY_OFF_MS = 180;
             class="size-12 rounded-full border-4 border-timber bg-serenity/50 text-xl transition-transform hover:scale-110"
             title="Undo"
           >
-            ↩️
+            <span class="emoji">↩️</span>
           </button>
           <button
             (click)="pass.emit()"
             class="size-16 rounded-full border-4 border-timber bg-rosette text-3xl transition-transform hover:scale-110"
             title="Nope"
           >
-            ❌
+            <span class="emoji">❌</span>
           </button>
           <button
             (click)="smash.emit()"
             class="size-16 rounded-full border-4 border-timber bg-honey text-3xl transition-transform hover:scale-110"
             title="Like"
           >
-            💖
+            <span class="emoji">💖</span>
           </button>
         </div>
       </div>

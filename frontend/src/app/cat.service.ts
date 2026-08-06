@@ -5,6 +5,7 @@ import { CatApiService } from './cat-api.service';
 import { SoundService } from './sound.service';
 
 const STORAGE_KEY = 'cats-tinder-goes-brrrr';
+const CHAT_STORAGE_KEY = 'cats-tinder-chat-history';
 
 @Injectable({ providedIn: 'root' })
 export class CatTinderService {
@@ -28,6 +29,7 @@ export class CatTinderService {
   public currentCatLikes$: Observable<Cat[]> = this.currentCatLikesSubject.asObservable();
   public historyCats$: Observable<Cat[]> = this.historyCatSubject.asObservable();
   public chatHistory$ = this.chatHistorySubject.asObservable();
+  public readonly catQueue$: Observable<Cat[]> = this.catQueueSubject.asObservable();
 
   public readonly matches$: Observable<Cat[]> = this.currentCatLikes$.pipe(
     map((cats) => cats.filter((cat) => cat.match)),
@@ -39,7 +41,7 @@ export class CatTinderService {
 
   constructor(private apiService: CatApiService, private soundService: SoundService) {
 
-    const savedLikesJson = localStorage.getItem(STORAGE_KEY);
+    const savedLikesJson = this.readStorage(STORAGE_KEY);
 
     if(savedLikesJson){
       const recoverLikes = JSON.parse(savedLikesJson);
@@ -48,7 +50,19 @@ export class CatTinderService {
 
     this.currentCatLikes$.subscribe(currentLikesArray => {
         const jsonToSave = JSON.stringify(currentLikesArray);
-        localStorage.setItem(STORAGE_KEY, jsonToSave); 
+        this.writeStorage(STORAGE_KEY, jsonToSave);
+    });
+
+    const savedChatJson = this.readStorage(CHAT_STORAGE_KEY);
+
+    if (savedChatJson) {
+      const recoveredChats = JSON.parse(savedChatJson);
+      this.chatHistorySubject.next(recoveredChats);
+    }
+
+    this.chatHistory$.subscribe(currentChats => {
+        const jsonToSave = JSON.stringify(currentChats);
+        this.writeStorage(CHAT_STORAGE_KEY, jsonToSave);
     });
 
     this.pendingMatchesSubject.pipe(
@@ -178,8 +192,17 @@ export class CatTinderService {
     });
   }
 
-  private popCatsFromQueue(): void {
-    const currentCat = this.currentCatSubject.value;
+  /** localStorage is unavailable in tests/SSR, so every access goes through these guards. */
+  private readStorage(key: string): string | null {
+    return typeof localStorage === 'undefined' ? null : localStorage.getItem(key);
+  }
+
+  private writeStorage(key: string, value: string): void {
+    if (typeof localStorage === 'undefined') return;
+    localStorage.setItem(key, value);
+  }
+
+  private popCatsFromQueue(): void {    const currentCat = this.currentCatSubject.value;
 
     if (currentCat) {
       const currentHistory = this.historyCatSubject.value;

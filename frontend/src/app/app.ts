@@ -16,26 +16,26 @@ import { CatTinderService } from './cat.service';
             routerLink="/"
             class="absolute left-6 flex items-center gap-2 text-2xl font-extrabold text-timber"
           >
-            <span class="text-4xl">😻</span> Catinder
+            <span class="emoji text-4xl">😻</span> Catinder
           </a>
           <div class="flex gap-3">
             <a
               routerLink="/"
               class="rounded-full border-4 border-timber bg-cream px-4 py-1 font-bold text-timber transition-transform hover:scale-105"
             >
-              🐾 Swipe
+              <span class="emoji">🐾</span> Swipe
             </a>
             <a
               routerLink="/likes"
               class="rounded-full border-4 border-timber bg-cream px-4 py-1 font-bold text-timber transition-transform hover:scale-105"
             >
-              💖 Likes
+              <span class="emoji">💖</span> Likes
             </a>
             <a
               routerLink="/matches"
               class="rounded-full border-4 border-timber bg-cream px-4 py-1 font-bold text-timber transition-transform hover:scale-105"
             >
-              💌 Matches
+              <span class="emoji">💌</span> Matches
             </a>
           </div>
         </nav>
@@ -59,7 +59,7 @@ import { CatTinderService } from './cat.service';
                 />
               </a>
             } @empty {
-              <span class="text-3xl" title="No matches yet">🐟</span>
+              <span class="emoji text-3xl" title="No matches yet">🐟</span>
             }
           </div>
         </aside>
@@ -72,7 +72,7 @@ import { CatTinderService } from './cat.service';
           [class.ml-2]="!sidebarOpen()"
           title="Toggle matches sidebar"
         >
-          {{ sidebarOpen() ? '◀️' : '▶️' }}
+          <span class="emoji">{{ sidebarOpen() ? '◀️' : '▶️' }}</span>
         </button>
 
         <!-- MAIN CONTENT -->

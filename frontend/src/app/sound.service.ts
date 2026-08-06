@@ -48,10 +48,10 @@ export class SoundService {
     oscillator.stop(start + duration);
   }
 
-  /** Short filtered-noise whoosh; pitch rises for like, falls for nope. */
+  /** Deep filtered-noise whoosh with a low-end thump; pitch rises for like, falls for nope. */
   playSwipe(toRight: boolean): void {
     const ctx = this.context;
-    const duration = 0.25;
+    const duration = 0.3;
     const bufferSize = Math.floor(ctx.sampleRate * duration);
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -64,33 +64,39 @@ export class SoundService {
 
     const filter = ctx.createBiquadFilter();
     filter.type = 'bandpass';
-    filter.frequency.setValueAtTime(toRight ? 400 : 1200, ctx.currentTime);
-    filter.frequency.exponentialRampToValueAtTime(toRight ? 1200 : 400, ctx.currentTime + duration);
+    filter.frequency.setValueAtTime(toRight ? 220 : 700, ctx.currentTime);
+    filter.frequency.exponentialRampToValueAtTime(toRight ? 700 : 220, ctx.currentTime + duration);
 
     const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.setValueAtTime(0.25, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
 
     noise.connect(filter).connect(gain).connect(ctx.destination);
     noise.start();
     noise.stop(ctx.currentTime + duration);
+
+    // Low "fwump" body underneath the whoosh
+    this.tone({ frequency: 130, endFrequency: 60, duration: 0.22, type: 'sine', volume: 0.28 });
   }
 
-  /** Cheerful ascending arpeggio. */
+  /** Warm, low-rooted chord swell instead of a high-pitched arpeggio. */
   playMatch(): void {
-    this.tone({ frequency: 659, duration: 0.15, type: 'triangle', volume: 0.2 });
-    this.tone({ frequency: 831, duration: 0.15, type: 'triangle', volume: 0.2, delay: 0.12 });
-    this.tone({ frequency: 988, duration: 0.3, type: 'triangle', volume: 0.2, delay: 0.24 });
+    this.tone({ frequency: 196, duration: 0.5, type: 'sine', volume: 0.18 });
+    this.tone({ frequency: 392, duration: 0.18, type: 'triangle', volume: 0.22 });
+    this.tone({ frequency: 494, duration: 0.18, type: 'triangle', volume: 0.22, delay: 0.12 });
+    this.tone({ frequency: 587, duration: 0.4, type: 'triangle', volume: 0.22, delay: 0.24 });
   }
 
-  /** Quick upward blip for outgoing messages. */
+  /** Rounded, deep "pop" for outgoing messages. */
   playSend(): void {
-    this.tone({ frequency: 600, endFrequency: 950, duration: 0.12, type: 'sine', volume: 0.15 });
+    this.tone({ frequency: 320, endFrequency: 520, duration: 0.14, type: 'triangle', volume: 0.2 });
+    this.tone({ frequency: 130, duration: 0.1, type: 'sine', volume: 0.18 });
   }
 
-  /** Soft two-tone ding for incoming cat replies. */
+  /** Mellow low two-tone knock for incoming cat replies. */
   playReceive(): void {
-    this.tone({ frequency: 880, duration: 0.12, type: 'sine', volume: 0.15 });
-    this.tone({ frequency: 660, duration: 0.2, type: 'sine', volume: 0.15, delay: 0.1 });
+    this.tone({ frequency: 523, duration: 0.15, type: 'triangle', volume: 0.18 });
+    this.tone({ frequency: 392, duration: 0.28, type: 'triangle', volume: 0.18, delay: 0.1 });
+    this.tone({ frequency: 196, duration: 0.2, type: 'sine', volume: 0.12 });
   }
 }

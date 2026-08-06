@@ -17,8 +17,8 @@ import { RouterLink } from "@angular/router";
                     class="size-16 rounded-full border-4 border-timber object-cover object-center"
                 />
                 <div>
-                    <h3 class="font-extrabold text-timber">😻 IT'S A MATCH!</h3>
-                    <p class="text-sm font-bold text-timber/80">{{ matchCat.name }} likes you back 💘</p>
+                    <h3 class="font-extrabold text-timber"><span class="emoji">😻</span> IT'S A MATCH!</h3>
+                    <p class="text-sm font-bold text-timber/80">{{ matchCat.name }} likes you back <span class="emoji">💘</span></p>
                 </div>
             </a>
         }
