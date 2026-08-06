@@ -21,9 +21,3 @@ body {
 body {
   background-color: var(--color-cream);
 }
-
-/* Softer, pastel-tinted emoji: same glyphs, washed-out candy palette */
-.emoji {
-  filter: saturate(0.45) brightness(1.08) contrast(0.92) hue-rotate(-8deg);
-  opacity: 0.9;
-}

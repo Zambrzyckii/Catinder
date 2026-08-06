@@ -19,8 +19,8 @@ const FLY_OFF_MS = 180;
       <!-- Narrow, phone-like vertical card: ~1/4 to 1/6 of the screen -->
       <div
         class="relative overflow-hidden rounded-2xl border-4 border-timber bg-cream shadow-xl"
-        [class.transition-transform]="!dragging()"
-        [class.duration-200]="!dragging()"
+        [class.transition-transform]="!dragging() && !instant()"
+        [class.duration-200]="!dragging() && !instant()"
         [style.transform]="cardTransform()"
       >
         <!-- Swipe badges, faded in proportionally to the drag distance -->
@@ -96,6 +96,8 @@ export class CatCardComponent {
 
   protected readonly dragX = signal(0);
   protected readonly dragging = signal(false);
+  /** True for one frame after a cat swap, so the new card resets without animating back. */
+  protected readonly instant = signal(false);
   private dragStartX = 0;
 
   protected readonly cardTransform = computed(
@@ -109,8 +111,14 @@ export class CatCardComponent {
   );
 
   ngOnChanges(): void {
+    // Reset instantly (transition suppressed for a frame) so the incoming card
+    // doesn't slide back in from the off-screen position of the previous one.
+    this.instant.set(true);
     this.dragX.set(0);
     this.dragging.set(false);
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => this.instant.set(false)),
+    );
   }
 
   protected onDragStart(event: PointerEvent): void {
@@ -130,20 +138,19 @@ export class CatCardComponent {
 
     const dx = this.dragX();
     if (dx > SWIPE_THRESHOLD_PX) {
-      this.flyOff(FLY_OFF_PX, () => this.smash.emit());
+      this.flyOff(1, () => this.smash.emit());
     } else if (dx < -SWIPE_THRESHOLD_PX) {
-      this.flyOff(-FLY_OFF_PX, () => this.pass.emit());
+      this.flyOff(-1, () => this.pass.emit());
     } else {
       this.dragX.set(0);
     }
   }
 
-  /** Animate the card off-screen, then emit so the parent swaps in the next cat. */
-  private flyOff(targetX: number, emit: () => void): void {
-    this.dragX.set(targetX);
-    setTimeout(() => {
-      this.dragX.set(0);
-      emit();
-    }, FLY_OFF_MS);
+  /** Animate the card fully off-screen, then emit so the parent swaps in the next cat.
+   *  dragX is NOT reset here - the card never comes back; ngOnChanges resets it
+   *  (without transition) only when the next cat is already in place. */
+  private flyOff(direction: 1 | -1, emit: () => void): void {
+    this.dragX.set(direction * Math.max(FLY_OFF_PX, window.innerWidth));
+    setTimeout(() => emit(), FLY_OFF_MS);
   }
 }
