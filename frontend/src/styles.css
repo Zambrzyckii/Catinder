@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+
+/* Tailwind v4: theme config lives in CSS (@theme) instead of tailwind.config.js */
+@theme {
+  --color-blush: #f0d1c0;
+  --color-honey: #d6c180;
+  --color-rosette: #d695a5;
+  --color-serenity: #759fc9;
+  --color-coral: #ce7b69;
+  --color-timber: #95664c;
+  --color-cream: #fdf6ec;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-cream);
+}
