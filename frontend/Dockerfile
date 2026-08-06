@@ -1,4 +1,4 @@
-FROM node:18-alpine AS build
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ FROM nginx:stable-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist/item-manager/browser /usr/share/nginx/html
 
 EXPOSE 80
 
