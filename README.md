@@ -6,7 +6,7 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-Catinder is a Tinder-style web app for cats. Swipe through cat profiles, like the ones you fancy and wait to see who likes you back. Every match gets its own chat, where the cat answers through an LLM playing a slightly arrogant, always hungry cat that works "meow" into its replies. Likes, matches and conversations are saved in the browser, so they survive a refresh.
+Catinder is a Tinder-style web app for cats, built as my first Angular project to learn the basics of the framework. Swipe through cat profiles, like the ones you fancy and wait to see who likes you back. Every match gets its own chat, where the cat answers through an LLM playing a slightly arrogant, always hungry cat that works "meow" into its replies. Likes, matches and conversations are saved in the browser, so they survive a refresh.
 
 ![Swiping through cat profiles and chatting with a match](./screenshots/demo.gif)
 
@@ -27,34 +27,40 @@ Catinder is a Tinder-style web app for cats. Swipe through cat profiles, like th
 
 ## Getting started
 
-### Requirements
-
-- Node.js 22.22.3 or newer
-- .NET 10 SDK
-- A free Groq API key from [console.groq.com](https://console.groq.com/), needed for the chat only
-
-### Clone
+Clone the repository and put your Groq API key in `backend/Api/.env`. The key is only needed for the chat, and a free one is available at [console.groq.com](https://console.groq.com/).
 
 ```bash
 git clone https://github.com/Zambrzyckii/catinder.git
 cd catinder
+echo "API_KEY=your_groq_api_key" > backend/Api/.env
 ```
 
-### Backend
+### Docker
+
+Requires Docker with Compose.
+
+```bash
+docker compose up --build
+```
+
+Open http://localhost:4200. The API runs at http://localhost:5285.
+
+### Manual
+
+Requires Node.js 22.22.3 or newer and the .NET 10 SDK.
+
+Start the backend.
 
 ```bash
 cd backend/Api
-echo "API_KEY=your_groq_api_key" > .env
 dotnet run
 ```
 
-### Frontend
-
-In a second terminal, from the repository root.
+Start the frontend in a second terminal, from the repository root.
 
 ```bash
 cd frontend
-npm install
+npm ci
 npm start
 ```
 
