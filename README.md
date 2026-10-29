@@ -8,7 +8,9 @@
 
 Catinder is a Tinder-style web app for cats, built as my first Angular project to learn the basics of the framework. Swipe through cat profiles, like the ones you fancy and wait to see who likes you back. Every match gets its own chat, where the cat answers through an LLM playing a slightly arrogant, always hungry cat that works "meow" into its replies. Likes, matches and conversations are saved in the browser, so they survive a refresh.
 
-![Swiping through cat profiles and chatting with a match](./screenshots/demo.gif)
+<p align="center">
+  <img src="./screenshots/demo.gif" alt="Swiping through cat profiles and chatting with a match">
+</p>
 
 ## Tech stack
 
